@@ -1,0 +1,32 @@
+EmployeeController.java
+-----------------------
+@PostMapping("/applyLoan")
+	public String applyLoan(@RequestBody LoanModel loan) {
+		String result = "";
+		result = usrService.applyLoan(loan);
+		return result;
+	}
+EmployeeService.java
+--------------------
+@Transactional
+public String applyLoan(LoanModel loanModel) {
+	String result="";
+	
+	EmployeeCard ecard=new EmployeeCard();
+	Employee emp=empRepo.findById(loanModel.getEmployeeId()).get();
+	String loanid=loanRepo.findByLoanType(loanModel.getItemCategory());
+	Loan loan=loanRepo.findById(loanid).get();
+	ecard.setCardId(3);
+	ecard.setEmp(emp);
+	ecard.setLoan(loan);
+	ecard.setCardIssueDate(LocalDate.now());	
+	EmployeeCard obj=empCardRepo.save(ecard);
+	
+	//inserting into issue table
+	EmployeeIssue empIssue=new EmployeeIssue();
+	
+	if(obj!=null)
+		result="Loan applied";
+		return result;
+}
+
