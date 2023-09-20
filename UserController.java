@@ -46,16 +46,16 @@ public class UserController {
 
 	// http://localhost:9080/api/users/saveUser
 	@PostMapping("/saveUser")
-	public String saveUser(@RequestBody UserDTO user) {
+	public String saveUser(@RequestBody UserDTO userDto) {
 		String result = "";
 		
-		/* if (user.getDob() == null) result = "Date is mandatory"; else {
-		
+		/* if (user.getDob() == null) result = "Date is mandatory"; else {*/
+		User user=modelMapper.map(userDto, User.class);
 		User u = usrService.saveUser(user);
 		if (u != null)
-			result = "User inserted";*/
+			result = "User inserted";
 
-		// }
+		 
 		
 return result;
 	
